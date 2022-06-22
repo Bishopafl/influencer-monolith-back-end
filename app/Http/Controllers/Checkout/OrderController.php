@@ -80,9 +80,16 @@ class OrderController
 
         return $source;
     }
-
+    /**
+     * if we have an order, and that order has a transaction id of the source that was sent,
+     * then we mark the order as complete
+     * then save it.
+     *
+     * After the order is saved, we call an event listener that passes the order object
+     *
+     * then we give a success response to the user.
+    */
     public function confirm (Request $request) {
-
         if (!$order = Order::whereTransactionId($request->input('source'))->first()) {
             return response([
                 'error' => 'Order not found!'

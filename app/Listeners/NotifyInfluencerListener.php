@@ -13,7 +13,7 @@ class NotifyInfluencerListener
     {
         $order = $event->order;
 
-        \Mail::send('emails.influencer-email', ['order' => $order], function(Message $message) use ($order) {
+        \Mail::send('influencer.influencer-email', ['order' => $order], function(Message $message) use ($order) {
             $message->to($order->influencer_email);
             $message->from('admin@influencer_app.com');
             $message->subject('A new order has been completed!');

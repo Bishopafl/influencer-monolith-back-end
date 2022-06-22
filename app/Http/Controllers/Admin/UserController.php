@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\AdminAddedEvent;
 use App\Http\Requests\UpdateInfoRequest;
 use App\Http\Requests\UpdatePasswordRequest;
 use App\Http\Requests\UserCreateRequest;
@@ -47,6 +48,8 @@ class UserController
             'user_id' => $user->id,
             'role_id' => $request->input('role_id'),
         ]);
+
+        event(new AdminAddedEvent($user));
 
         return response(new UserResource($user), Response::HTTP_CREATED);
     }
